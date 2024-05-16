@@ -11,75 +11,20 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import React from "react";
 
-export default function Login({ navigation }) {
+export default function Principal({ navigation }) {
   const [number, onChangeNumber] = useState("");
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" backgroundColor="gray" />
       <ImageBackground
-        source={require("./assets/fundo.png")}
+        source={require("../assets/fundo.png")}
         resizeMode="cover"
         style={styles.fundoPreto}
       >
-        <Image source={require("./assets/logo.png")} style={styles.logo} />
+        <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
-          <Text style={styles.titulo}>Login</Text>
-          <Text style={styles.textoLogin}>Usuário</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Digite seu usuário"
-          />
-          <Text style={styles.textoLogin}>Senha</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Digite sua senha"
-            secureTextEntry={true}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              console.log("Apertado");
-            }}
-          >
-            <Text style={styles.buttonText}> Entrar</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.buttonNormal}
-            onPress={() => {
-              console.log("Senha");
-            }}
-          >
-            <Text>
-              Esqueceu a<Text style={styles.linkText}> Senha?</Text>
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Cadastro");
-            }}
-          >
-            <Text>
-              Nova Empresa? Entre em
-              <Text style={styles.linkText}> Contato!</Text>
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonCriar}
-            onPress={() => {
-              navigation.navigate("Cadastro");
-            }}
-          >
-            <Text>
-              Você não tem uma conta?
-              <Text style={styles.linkText}> Registrar!</Text>
-            </Text>
-          </TouchableOpacity>
+          <Text>Principal</Text>
         </View>
       </ImageBackground>
     </View>

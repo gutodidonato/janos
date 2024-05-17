@@ -10,8 +10,25 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import React from "react";
+import { signInWithEmailAndPassword, auth } from "../firebase/firebaseConnection";
+
 
 export default function Login({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  async function logar(){
+    await signInWithEmailAndPassword(auth, email, password )
+    .then((value) =>{
+      alert("Bem-vindo :" + value.user.email);
+      navigation.navigate("Tabs")
+    }).catch((error) => {
+        alert("Ops algo deu errado!");
+        return;
+    })
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" backgroundColor="gray" />
@@ -23,19 +40,21 @@ export default function Login({ navigation }) {
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
           <Text style={styles.titulo}>Login</Text>
-          <Text style={styles.textoLogin}>Usuário</Text>
-          <TextInput style={styles.input} placeholder="Digite seu usuário" />
+          <Text style={styles.textoLogin}>Email</Text>
+          <TextInput style={styles.input} 
+            placeholder="Digite seu Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}/> 
           <Text style={styles.textoLogin}>Senha</Text>
           <TextInput
             style={styles.input}
             placeholder="Digite sua senha"
             secureTextEntry={true}
-          />
+            value={password}
+            onChangeText={(text) => setPassword(text)}/>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              navigation.navigate("Tabs");
-            }}
+            onPress={logar}
           >
             <Text style={styles.buttonText}> Entrar</Text>
           </TouchableOpacity>

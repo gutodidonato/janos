@@ -30,7 +30,9 @@ export default function Cadastro({ navigation }) {
           password: password,
           nome: nome,
           cpf: cpf,
-          status: "cliente"
+          status: "cliente",
+          latitude: 0,
+          longitude: 0
         });
         alert('Usuário criado: ' + userCredential.user.email);
         navigation.navigate('Login');

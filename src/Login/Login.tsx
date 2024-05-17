@@ -8,28 +8,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
 import { signInWithEmailAndPassword, auth } from "../firebase/firebaseConnection";
+import { AuthContext } from "../contexts/auth";
 
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const {usuario , logar} = useContext(AuthContext)
 
-
-  async function logar(){
-    await signInWithEmailAndPassword(auth, email, password )
-    .then((value) =>{
-      alert("Bem-vindo :" + value.user.email);
-      navigation.navigate("Tabs")
-    }).catch((error) => {
-        alert("Ops algo deu errado!");
-        return;
-    })
+  function signIn(){
+    logar(email, password)
+    navigation.navigate('Tabs')
   }
 
   return (
+    
     <View style={styles.container}>
       <StatusBar style="auto" backgroundColor="gray" />
       <ImageBackground
@@ -54,7 +51,7 @@ export default function Login({ navigation }) {
             onChangeText={(text) => setPassword(text)}/>
           <TouchableOpacity
             style={styles.button}
-            onPress={logar}
+            onPress={signIn}
           >
             <Text style={styles.buttonText}> Entrar</Text>
           </TouchableOpacity>

@@ -8,11 +8,17 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
+import { AuthContext } from "../contexts/auth";
 
 export default function Principal({ navigation }) {
   const [number, onChangeNumber] = useState("");
+
+  const {user, userData, logar} = useContext(AuthContext);
+
+  console.log(user)
+  console.log(userData.nome)
 
   return (
     <View style={styles.container}>

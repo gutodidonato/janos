@@ -10,7 +10,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import React from "react";
-import { auth, createUserWithEmailAndPassword, updateProfile  } from "../firebase/firebaseConnection";
+import { auth, createUserWithEmailAndPassword, updateProfile  } from "../config/firebaseConnection";
 import { getDatabase, ref, set } from "firebase/database";
 
 export default function Cadastro({ navigation }) {

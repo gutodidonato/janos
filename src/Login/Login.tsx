@@ -10,7 +10,6 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { useContext, useState } from "react";
 import React from "react";
-import { signInWithEmailAndPassword, auth } from "../firebase/firebaseConnection";
 import { AuthContext } from "../contexts/auth";
 
 

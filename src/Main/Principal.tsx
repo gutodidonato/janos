@@ -6,17 +6,32 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { AuthContext } from "../contexts/auth";
 
 export default function Principal({ navigation }) {
-  const [number, onChangeNumber] = useState("");
-
+  const [servico, setServico] = useState([])
   const {user, userData, logar} = useContext(AuthContext);
 
   console.log(user)
+
+  const makeAPICall = async () => {
+    try {
+      const response = await fetch(`http://192.168.0.83:8080/servicos/${user.status}`, {mode: "cors", });
+      const data = await response.json();
+      setServico(data);
+    } catch (e) {
+      console.error("Error fetching restaurantes:", e);
+    }
+  };
+
+
+  useEffect(() => {
+    makeAPICall();
+  }, []);
 
 
   return (
@@ -28,7 +43,18 @@ export default function Principal({ navigation }) {
       >
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
-          <Text>Principal</Text>
+          <Text style={styles.titulo}>Serviços para {user.status}</Text>
+          <FlatList
+          data={servico} 
+          renderItem={({ item }) => (
+          <View style={estilo.caixa}>
+            <TouchableOpacity onPress={() => navigation.navigate('DetalhesDoServico', { idDoServico: item.id })}>
+                <Text style={estilo.texto}>{item.nome}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        keyExtractor={(item) => item.nome} 
+      />
         </View>
       </ImageBackground>
     </View>
@@ -66,5 +92,25 @@ const styles = StyleSheet.create({
     marginTop: 120,
     paddingTop: 40,
   },
+  titulo: {
+    fontSize: 22,
+    marginBottom: 20
+  }
 
 });
+
+const estilo = StyleSheet.create({
+  caixa: {
+    flex: 1,
+    backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    marginVertical: 10
+  },
+  texto: {
+    color: "white"
+  }
+})

@@ -34,7 +34,7 @@ export default function Cadastro({ navigation }) {
           nome: nome,
           cpf: cpf,
           status: "cliente",
-          local: "Freguesia do Ó",
+          local: "freguesiadoo",
           avaliacao: 5
         });
         alert('Usuário criado: ' + userCredential.user.email);

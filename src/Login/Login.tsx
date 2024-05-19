@@ -17,11 +17,21 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const {usuario , logar} = useContext(AuthContext)
+  const {user, userData, logar, deslogar} = useContext(AuthContext);
+  
 
-  function signIn(){
-    logar(email, password)
-    navigation.navigate('Tabs')
+  async function signIn(){
+    console.log(user)
+    console.log(userData)
+    try{
+      await logar(email, password)
+      if (user){
+        navigation.navigate('Principal');
+      }
+    }
+    catch{
+      alert('Erro ao logar');
+    }
   }
 
   return (

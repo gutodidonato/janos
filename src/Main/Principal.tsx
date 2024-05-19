@@ -7,7 +7,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { useContext, useState } from "react";
 import React from "react";
 import { AuthContext } from "../contexts/auth";
@@ -18,11 +17,10 @@ export default function Principal({ navigation }) {
   const {user, userData, logar} = useContext(AuthContext);
 
   console.log(user)
-  console.log(userData.nome)
+
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" backgroundColor="gray" />
       <ImageBackground
         source={require("../assets/fundo.png")}
         resizeMode="cover"
@@ -40,7 +38,7 @@ export default function Principal({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#777676",
+    backgroundColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -68,46 +66,5 @@ const styles = StyleSheet.create({
     marginTop: 120,
     paddingTop: 40,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
-    backgroundColor: "#d4d4d4",
-    borderColor: "#d4d4d4",
-    width: "60%",
-  },
-  titulo: {
-    fontSize: 25,
-    textAlign: "left",
-    width: "60%",
-    marginVertical: 10,
-  },
-  textoLogin: {
-    fontSize: 18,
-    width: "60%",
-    textAlign: "left",
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#000000",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: "60%",
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "white",
-  },
-  linkText: {
-    color: "#20179b",
-    fontWeight: "600",
-  },
-  buttonNormal: {
-    marginVertical: 10,
-  },
-  buttonCriar: {
-    marginTop: 50,
-  },
+
 });

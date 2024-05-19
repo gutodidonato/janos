@@ -8,11 +8,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
+import { AuthContext} from "../contexts/auth";
 
-export default function Maps({ navigation }) {
-  const [number, onChangeNumber] = useState("");
+
+export default function Configuration({ navigation }) {
+
+  const {user, userData, logar, deslogar} = useContext(AuthContext);
+
+
+  async function handleLogout() {
+    try {
+      await deslogar();
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log("Deslogar não funcionou:", error);
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -24,7 +38,24 @@ export default function Maps({ navigation }) {
       >
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
-          <Text>Maps</Text>
+          <Text style={configStyle.titulo}>Nome do usuário:</Text>
+          <Text style={configStyle.usuario}>{userData.nome}</Text>
+
+          <Text style={configStyle.titulo}>Email atual:</Text>
+          <Text style={configStyle.usuario}>{userData.email}</Text>
+
+          <Text style={configStyle.titulo}>Localização atual:</Text>
+          <Text style={configStyle.usuario}>{userData.local}</Text>
+
+          <Text style={configStyle.titulo}>Status:</Text>
+          <Text style={configStyle.usuario}>{userData.status}</Text>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleLogout}
+          >
+            <Text style={styles.buttonText}> Deslogar</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -62,22 +93,6 @@ const styles = StyleSheet.create({
     marginTop: 120,
     paddingTop: 40,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
-    backgroundColor: "#d4d4d4",
-    borderColor: "#d4d4d4",
-    width: "60%",
-  },
-  titulo: {
-    fontSize: 25,
-    textAlign: "left",
-    width: "60%",
-    marginVertical: 10,
-  },
   textoLogin: {
     fontSize: 18,
     width: "60%",
@@ -90,18 +105,27 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: "60%",
     borderRadius: 10,
+    marginTop: 10
   },
   buttonText: {
     color: "white",
   },
-  linkText: {
-    color: "#20179b",
-    fontWeight: "600",
-  },
-  buttonNormal: {
-    marginVertical: 10,
-  },
   buttonCriar: {
     marginTop: 50,
   },
+});
+
+const configStyle = StyleSheet.create({
+  titulo : {
+    fontWeight: '600',
+    fontSize: 18,
+    marginVertical: 5,
+  },
+  usuario :{
+    backgroundColor: '#362e8f',
+    borderRadius: 10,
+    paddingHorizontal:10,
+    paddingVertical: 10,
+    color: 'white'
+  }
 });

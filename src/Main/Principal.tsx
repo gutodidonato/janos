@@ -12,6 +12,9 @@ import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { AuthContext } from "../contexts/auth";
 
+
+import Lanches from "../Produtos/Lanches";
+
 export default function Principal({ navigation }) {
   const [servico, setServico] = useState([])
   const {user, userData, logar} = useContext(AuthContext);
@@ -48,9 +51,11 @@ export default function Principal({ navigation }) {
           data={servico} 
           renderItem={({ item }) => (
           <View style={estilo.caixa}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetalhesDoServico', { idDoServico: item.id })}>
-                <Text style={estilo.texto}>{item.nome}</Text>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            item.nome === 'Lanches' ? navigation.navigate('Lanches') : console.log("Não implementado ainda");
+          }}>
+            <Text style={estilo.texto}>{item.nome}</Text>
+          </TouchableOpacity>
           </View>
         )}
         keyExtractor={(item) => item.nome} 

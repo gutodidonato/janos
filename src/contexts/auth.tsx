@@ -49,7 +49,8 @@ function AuthProvider({ children }) {
         email: userCredential.user.email,
         cpf: snapshot.val().cpf,
         status: snapshot.val().status,
-        local: snapshot.val().local
+        local: snapshot.val().local,
+        avaliacao : snapshot.val().avaliacao
       };
       setUser(userCredential.user);
       setUserData(userData);

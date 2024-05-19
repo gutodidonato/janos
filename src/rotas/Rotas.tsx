@@ -15,6 +15,7 @@ import Configuration from "../Main/Configuration";
 
 import Login from "../Login/Login"
 import Cadastro from "../Login/Cadastro";
+import Lanches from "../Produtos/Lanches";
 
 
 
@@ -80,6 +81,7 @@ function Rotas() {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
         <Stack.Screen name="Principal" component={Tabs} options={{ headerShown: false }} />
+        <Stack.Screen name="Lanches" component={Lanches} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

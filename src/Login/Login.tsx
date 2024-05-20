@@ -67,7 +67,7 @@ export default function Login({ navigation }) {
           <TouchableOpacity
             style={styles.buttonNormal}
             onPress={() => {
-              console.log("Senha");
+              navigation.navigate("RecuperarSenha");
             }}
           >
             <Text>

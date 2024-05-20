@@ -6,7 +6,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import { AuthContext } from "../contexts/auth"
 
 
-
 import Maps from "../Main/Maps";
 import Principal from "../Main/Principal";
 import Configuration from "../Main/Configuration";
@@ -16,6 +15,7 @@ import Configuration from "../Main/Configuration";
 import Login from "../Login/Login"
 import Cadastro from "../Login/Cadastro";
 import Lanches from "../Produtos/Lanches";
+import RecuperarSenha from "../Login/RecuperarSenha";
 
 
 
@@ -89,6 +89,7 @@ export default function Rotas() {
       <NavigationContainer>
           <Stack.Navigator initialRouteName={initialRoute}>
               <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+              <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} options={{ headerShown: false }} />
               <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
               <Stack.Screen name="Principal" component={Tabs} options={{ headerShown: false }} />
               <Stack.Screen name="Lanches" component={Lanches} options={{ headerShown: false }} />

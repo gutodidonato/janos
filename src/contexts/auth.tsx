@@ -8,8 +8,18 @@ export const AuthContext = createContext({});
 
 
 function AuthProvider({ children }) {
-  const [userData, setUserData] = useState({});
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    async function loadStorage(){
+      const userStored = await AsyncStorage.getItem('Auth_user')
+    if (userStored){
+      setUser(JSON.parse(userStored));
+    }
+  }
+    loadStorage()
+
+  }, [])
   
   const auth = getAuth();
 
@@ -18,23 +28,9 @@ function AuthProvider({ children }) {
     console.log("Deslogar...")
     await signOut(auth);
     await AsyncStorage.removeItem('Auth_user');
-    setUserData({})
-    setUser(null)
+    setUser({})
     console.log("Deslogado")
   }
-
-
-  useEffect(()=>{
-    async function loadStorage(){
-      const userStored = await AsyncStorage.getItem('Auth_user')
-    if (userStored){
-      setUser(JSON.parse(userStored));
-      setUserData(JSON.parse(userStored));
-    }
-  }
-    loadStorage()
-
-  }, [])
 
   async function logar(email, password) {
     try {
@@ -52,8 +48,7 @@ function AuthProvider({ children }) {
         local: snapshot.val().local,
         avaliacao : snapshot.val().avaliacao
       };
-      setUser(userCredential.user);
-      setUserData(userData);
+      setUser(userData);
       storageUser(userData);
     } catch (error) {
       alert("Ops, algo deu errado: " + error.message);
@@ -65,8 +60,9 @@ function AuthProvider({ children }) {
     await AsyncStorage.setItem('Auth_user', JSON.stringify(data))
   }
 
+
   return (
-    <AuthContext.Provider value={{ user, userData, logar, deslogar }}>
+    <AuthContext.Provider value={{ user, logar, deslogar }}>
       {children}
     </AuthContext.Provider>
   );

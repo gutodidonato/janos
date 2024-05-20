@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { AuthContext } from "../contexts/auth";
 
@@ -17,22 +17,21 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const {user, userData, logar, deslogar} = useContext(AuthContext);
-  
+  const { user, logar, deslogar  } = useContext(AuthContext);
 
   async function signIn(){
-    console.log(user)
-    console.log(userData)
-    try{
-      await logar(email, password)
-      if (user){
-        navigation.navigate('Principal');
-      }
-    }
-    catch{
+    try {
+      await logar(email, password);
+    } catch {
       alert('Erro ao logar');
     }
   }
+
+  useEffect(() => {
+    if (Object.keys(user).length > 0) {
+      navigation.navigate('Principal');
+    }
+  }, [user, navigation]);
 
   return (
     

@@ -15,12 +15,9 @@ import {
   
   export default function Lanches({ navigation }) {
     const [servico, setServico] = useState([])
-    const {user, userData, logar} = useContext(AuthContext);
-  
-    console.log(user.avaliacao)
+    const { user, logar, deslogar} = useContext(AuthContext);
 
     const url = `http://192.168.0.83:8080/servicos/cliente/${user.local}/${user.avaliacao}`;
-    console.log(url)
   
     const makeAPICall = async () => {
       try {

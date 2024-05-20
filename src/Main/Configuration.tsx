@@ -15,7 +15,7 @@ import { AuthContext} from "../contexts/auth";
 
 export default function Configuration({ navigation }) {
 
-  const {user, userData, logar, deslogar} = useContext(AuthContext);
+  const {user, logar, deslogar} = useContext(AuthContext);
 
 
   async function handleLogout() {
@@ -39,16 +39,16 @@ export default function Configuration({ navigation }) {
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
           <Text style={configStyle.titulo}>Nome do usuário:</Text>
-          <Text style={configStyle.usuario}>{userData.nome}</Text>
+          <Text style={configStyle.usuario}>{user.nome}</Text>
 
           <Text style={configStyle.titulo}>Email atual:</Text>
-          <Text style={configStyle.usuario}>{userData.email}</Text>
+          <Text style={configStyle.usuario}>{user.email}</Text>
 
           <Text style={configStyle.titulo}>Localização atual:</Text>
-          <Text style={configStyle.usuario}>{userData.local}</Text>
+          <Text style={configStyle.usuario}>{user.local}</Text>
 
           <Text style={configStyle.titulo}>Status:</Text>
-          <Text style={configStyle.usuario}>{userData.status}</Text>
+          <Text style={configStyle.usuario}>{user.status}</Text>
 
           <TouchableOpacity
             style={styles.button}

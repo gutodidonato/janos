@@ -70,21 +70,30 @@ function Tabs() {
         </Tab.Navigator>
   );
 }
-function Rotas() {
+export default function Rotas() {
   const { user } = useContext(AuthContext);
+  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList | null>(null);
 
-  const initialRoute = user ? "Principal" : "Login";
+  useEffect(() => {
+      if (user !== undefined) {
+          const rotaInicial = (Object.keys(user).length > 0) ? "Principal" : "Login";
+          setInitialRoute(rotaInicial);
+      }
+  }, [user]);
+
+  if (initialRoute === null) {
+      return null;
+  }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRoute}>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
-        <Stack.Screen name="Principal" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen name="Lanches" component={Lanches} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+          <Stack.Navigator initialRouteName={initialRoute}>
+              <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+              <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
+              <Stack.Screen name="Principal" component={Tabs} options={{ headerShown: false }} />
+              <Stack.Screen name="Lanches" component={Lanches} options={{ headerShown: false }} />
+          </Stack.Navigator>
+      </NavigationContainer>
   );
 }
 
-export default Rotas;

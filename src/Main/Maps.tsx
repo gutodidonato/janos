@@ -12,7 +12,6 @@ import { useState } from "react";
 import React from "react";
 
 export default function Maps({ navigation }) {
-  const [number, onChangeNumber] = useState("");
 
   return (
     <View style={styles.container}>

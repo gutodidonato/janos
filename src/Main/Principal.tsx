@@ -17,7 +17,7 @@ import Lanches from "../Produtos/Lanches";
 
 export default function Principal({ navigation }) {
   const [servico, setServico] = useState([])
-  const {user, userData, logar} = useContext(AuthContext);
+  const { user, logar, deslogar} = useContext(AuthContext);
 
   console.log(user)
 

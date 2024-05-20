@@ -8,9 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
-import { signInWithEmailAndPassword, auth } from "../firebase/firebaseConnection";
 import { AuthContext } from "../contexts/auth";
 
 
@@ -18,12 +17,21 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const {usuario , logar} = useContext(AuthContext)
+  const { user, logar, deslogar  } = useContext(AuthContext);
 
-  function signIn(){
-    logar(email, password)
-    navigation.navigate('Tabs')
+  async function signIn(){
+    try {
+      await logar(email, password);
+    } catch {
+      alert('Erro ao logar');
+    }
   }
+
+  useEffect(() => {
+    if (Object.keys(user).length > 0) {
+      navigation.navigate('Principal');
+    }
+  }, [user, navigation]);
 
   return (
     
@@ -59,7 +67,7 @@ export default function Login({ navigation }) {
           <TouchableOpacity
             style={styles.buttonNormal}
             onPress={() => {
-              console.log("Senha");
+              navigation.navigate("RecuperarSenha");
             }}
           >
             <Text>

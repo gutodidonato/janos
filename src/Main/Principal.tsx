@@ -6,17 +6,39 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
+import { AuthContext } from "../contexts/auth";
+
+
+import Lanches from "../Produtos/Lanches";
 
 export default function Principal({ navigation }) {
-  const [number, onChangeNumber] = useState("");
+  const [servico, setServico] = useState([])
+  const { user, logar, deslogar} = useContext(AuthContext);
+
+  console.log(user)
+
+  const makeAPICall = async () => {
+    try {
+      const response = await fetch(`http://192.168.0.83:8080/servicos/${user.status}`, {mode: "cors", });
+      const data = await response.json();
+      setServico(data);
+    } catch (e) {
+      console.error("Error fetching restaurantes:", e);
+    }
+  };
+
+
+  useEffect(() => {
+    makeAPICall();
+  }, []);
+
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" backgroundColor="gray" />
       <ImageBackground
         source={require("../assets/fundo.png")}
         resizeMode="cover"
@@ -24,7 +46,20 @@ export default function Principal({ navigation }) {
       >
         <Image source={require("../assets/logo.png")} style={styles.logo} />
         <View style={styles.caixa}>
-          <Text>Principal</Text>
+          <Text style={styles.titulo}>Serviços para {user.status}</Text>
+          <FlatList
+          data={servico} 
+          renderItem={({ item }) => (
+          <View style={estilo.caixa}>
+          <TouchableOpacity onPress={() => {
+            item.nome === 'Lanches' ? navigation.navigate('Lanches') : console.log("Não implementado ainda");
+          }}>
+            <Text style={estilo.texto}>{item.nome}</Text>
+          </TouchableOpacity>
+          </View>
+        )}
+        keyExtractor={(item) => item.nome} 
+      />
         </View>
       </ImageBackground>
     </View>
@@ -34,7 +69,7 @@ export default function Principal({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#777676",
+    backgroundColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -62,46 +97,25 @@ const styles = StyleSheet.create({
     marginTop: 120,
     paddingTop: 40,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
-    backgroundColor: "#d4d4d4",
-    borderColor: "#d4d4d4",
-    width: "60%",
-  },
   titulo: {
-    fontSize: 25,
-    textAlign: "left",
-    width: "60%",
-    marginVertical: 10,
-  },
-  textoLogin: {
-    fontSize: 18,
-    width: "60%",
-    textAlign: "left",
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#000000",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: "60%",
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "white",
-  },
-  linkText: {
-    color: "#20179b",
-    fontWeight: "600",
-  },
-  buttonNormal: {
-    marginVertical: 10,
-  },
-  buttonCriar: {
-    marginTop: 50,
-  },
+    fontSize: 22,
+    marginBottom: 20
+  }
+
 });
+
+const estilo = StyleSheet.create({
+  caixa: {
+    flex: 1,
+    backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    marginVertical: 10
+  },
+  texto: {
+    color: "white"
+  }
+})
